@@ -98,8 +98,8 @@ export default function WhyBuyOffPlan() {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <Badge className="mb-4 bg-custom-beige text-gray-900 rounded-none">Achat sur Plan</Badge>
-          <h2 className="text-6xl font-bold text-gray-900 mb-6">Pourquoi acheter sur plan ?</h2>
+          <Badge className="mb-4 bg-custom-beige-light text-custom-beige rounded-none">Achat sur Plan</Badge>
+          <h2 className="text-6xl font-bold text-gray-900 mb-6">Pourquoi Acheter sur Plan ?</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             L'achat sur plan vous offre des avantages exclusifs et des garanties solides pour sécuriser votre
             investissement immobilier.
@@ -117,7 +117,7 @@ export default function WhyBuyOffPlan() {
                 <div className="mb-6">
                   <advantage.icon className="h-12 w-12 text-custom-beige mx-auto group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <Badge className="mb-4 bg-custom-beige text-gray-900 rounded-none">{advantage.highlight}</Badge>
+                <Badge className="mb-4 bg-custom-beige text-white rounded-none">{advantage.highlight}</Badge>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{advantage.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{advantage.description}</p>
               </CardContent>
@@ -127,7 +127,7 @@ export default function WhyBuyOffPlan() {
 
         {/* Timeline Section */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Processus d'achat sur plan</h3>
+          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Processus d'Achat sur Plan</h3>
           <div className="grid md:grid-cols-4 gap-6">
             {timeline.map((step, index) => (
               <div key={index} className="relative">
@@ -165,7 +165,7 @@ export default function WhyBuyOffPlan() {
 
         {/* Guarantees Section */}
         <div className="bg-custom-beige-light p-8 mb-16">
-          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Vos garanties</h3>
+          <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Vos Garanties</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {guarantees.map((guarantee, index) => (
               <div key={index} className="text-center">

@@ -1,14 +1,10 @@
 "use client"
 
-import type React from "react"
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import PlanLightbox from "@/components/plan-lightbox"
-import CoverLightbox from "@/components/cover-lightbox"
-import GalleryLightbox from "@/components/gallery-lightbox"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import {
   ArrowLeft,
   Home,
@@ -21,114 +17,22 @@ import {
   Zap,
   Droplets,
   Wind,
+  Phone,
+  MessageCircle,
   Eye,
+  Trees,
   ChevronLeft,
   ChevronRight,
   Camera,
   Tv,
-  Phone,
-  Mail,
-  MapPin,
-  MessageCircle,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import ContactForm from "@/components/contact-form"
-
 
 export default function AppartementS3Page() {
   const [showPlanLightbox, setShowPlanLightbox] = useState(false)
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0)
   const [lightboxStartIndex, setLightboxStartIndex] = useState(0)
-  const [currentCoverIndex, setCurrentCoverIndex] = useState(0)
-  const [showCoverLightbox, setShowCoverLightbox] = useState(false)
-  const [coverLightboxIndex, setCoverLightboxIndex] = useState(0)
-  const [showGalleryLightbox, setShowGalleryLightbox] = useState(false)
-  const [galleryLightboxIndex, setGalleryLightboxIndex] = useState(0)
-  const [touchStart, setTouchStart] = useState<number | null>(null)
-  const [touchEnd, setTouchEnd] = useState<number | null>(null)
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
-  const coverImages = [
-    {
-      src: "/s3-new-living-dining-gallery.png",
-      alt: "Salon et salle à manger S+3 - Espace de vie moderne",
-    },
-    {
-      src: "/s3-new-dining-area-gallery.png",
-      alt: "Salle à manger S+3 - Espace repas avec miroirs",
-    },
-    {
-      src: "/s3-new-open-living-gallery.png",
-      alt: "Salon S+3 - Espace de vie ouvert et moderne",
-    },
-    {
-      src: "/s3-new-kitchen-island-gallery.png",
-      alt: "Cuisine S+3 - Cuisine moderne avec îlot central",
-    },
-    {
-      src: "/s3-new-master-bedroom-gallery.png",
-      alt: "Suite parentale S+3 - Chambre principale moderne",
-    },
-  ]
-
-  const galleryImages = [
-    {
-      src: "/s3-new-living-dining-gallery.png",
-      alt: "Salon et salle à manger S+3 - Espace de vie moderne",
-    },
-    {
-      src: "/s3-new-dining-area-gallery.png",
-      alt: "Salle à manger S+3 - Espace repas avec miroirs",
-    },
-    {
-      src: "/s3-new-open-living-gallery.png",
-      alt: "Salon S+3 - Espace de vie ouvert et moderne",
-    },
-    {
-      src: "/s3-new-kitchen-island-gallery.png",
-      alt: "Cuisine S+3 - Cuisine moderne avec îlot central",
-    },
-    {
-      src: "/s3-new-master-bedroom-gallery.png",
-      alt: "Suite parentale S+3 - Chambre principale moderne",
-    },
-  ]
-
-  const nextCoverImage = () => {
-    setCurrentCoverIndex((prev) => (prev + 1) % coverImages.length)
-  }
-
-  const prevCoverImage = () => {
-    setCurrentCoverIndex((prev) => (prev - 1 + coverImages.length) % coverImages.length)
-  }
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe) {
-      nextCoverImage()
-    }
-    if (isRightSwipe) {
-      prevCoverImage()
-    }
-  }
 
   const specifications = [
     { icon: Ruler, label: "Surface", value: "139-208 m²" },
@@ -159,7 +63,9 @@ export default function AppartementS3Page() {
     { icon: Wind, label: "VMC double flux" },
   ]
 
+  // Generate 22 S+3 unit plans - all with new architectural plans
   const s3Plans = [
+    // New architectural plans (1-10)
     {
       src: "/s3-plan-b11.png",
       alt: "Plan S+3 - Appartement B.11 (1er étage Bloc B)",
@@ -210,6 +116,7 @@ export default function AppartementS3Page() {
       alt: "Plan S+3 - Appartement B.01 (RDC Bloc B)",
       title: "Plan S+3 - Appartement B.01 (RDC Bloc B) - 208 m²",
     },
+    // New architectural plans (11-22)
     {
       src: "/s3-plan-d02.png",
       alt: "Plan S+3 - Appartement D.02 (RDC Bloc D)",
@@ -285,16 +192,6 @@ export default function AppartementS3Page() {
     setShowPlanLightbox(true)
   }
 
-  const openCoverLightbox = (index: number) => {
-    setCoverLightboxIndex(index)
-    setShowCoverLightbox(true)
-  }
-
-  const openGalleryLightbox = (index: number) => {
-    setGalleryLightboxIndex(index)
-    setShowGalleryLightbox(true)
-  }
-
   const scrollToContact = () => {
     const contactSection = document.getElementById("contact-section")
     if (contactSection) {
@@ -315,7 +212,24 @@ export default function AppartementS3Page() {
                 <span className="text-lg font-bold text-gray-900">The Life Residence</span>
               </div>
             </Link>
-            <div className="flex items-center space-x-3"></div>
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-none border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-white bg-transparent"
+              >
+                <Phone className="h-4 w-4 mr-2" />
+                Appeler
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="rounded-none border-custom-beige bg-white text-custom-beige hover:bg-custom-beige hover:text-white"
+              >
+                <MessageCircle className="h-4 w-4 mr-2" />
+                WhatsApp
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -339,6 +253,10 @@ export default function AppartementS3Page() {
             <div>
               <Badge className="mb-4 bg-custom-beige text-white rounded-none">Appartement S+3</Badge>
               <h1 className="text-4xl font-bold text-gray-900 mb-6">Appartement S+3</h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Espace généreux pour grandes familles. Trois chambres spacieuses, salon cathédrale et finitions
+                exceptionnelles pour un art de vivre raffiné.
+              </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                 {specifications.map((spec, index) => (
@@ -351,60 +269,18 @@ export default function AppartementS3Page() {
                   </div>
                 ))}
               </div>
+
+              {/* Removed the "Demander une Visite" button */}
             </div>
 
             <div className="relative">
-              <div className="relative h-96 overflow-hidden rounded-lg">
-                <div
-                  className="flex transition-transform duration-500 ease-in-out h-full"
-                  style={{ transform: `translateX(-${currentCoverIndex * 100}%)` }}
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
-                >
-                  {coverImages.map((image, index) => (
-                    <div key={index} className="w-full flex-shrink-0 relative">
-                      <Image
-                        src={image.src || "/placeholder.svg"}
-                        alt={image.alt}
-                        fill
-                        className="object-cover cursor-pointer"
-                        onClick={() => openCoverLightbox(index)}
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={prevCoverImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-custom-beige/90 border-white text-white hover:bg-custom-beige z-10"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={nextCoverImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-custom-beige/90 border-white text-white hover:bg-custom-beige z-10"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
-
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                  {coverImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentCoverIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentCoverIndex ? "bg-white" : "bg-white/50"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-
+              <Image
+                src="/s3-modern-living-dining-hero.jpeg"
+                alt="Appartement S+3 - Grand salon avec cheminée et salle à manger"
+                width={600}
+                height={400}
+                className="w-full h-96 object-cover"
+              />
               <div className="absolute top-4 right-4">
                 <Badge className="bg-custom-beige text-white rounded-none">22 Unités Disponibles</Badge>
               </div>
@@ -414,10 +290,11 @@ export default function AppartementS3Page() {
       </section>
 
       {/* Plans Section */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-6">
+          <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Plans et Agencement</h2>
+            <p className="text-lg text-gray-600">Un agencement pensé pour les grandes familles</p>
           </div>
 
           <div className="max-w-4xl mx-auto">
@@ -439,7 +316,7 @@ export default function AppartementS3Page() {
                           src={plan.src || "/placeholder.svg"}
                           alt={plan.alt}
                           fill
-                          className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
+                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
                           <Button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-none bg-custom-beige hover:bg-custom-beige">
@@ -555,7 +432,7 @@ export default function AppartementS3Page() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(0)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
                   src="/s3-new-living-dining-gallery.png"
@@ -567,11 +444,11 @@ export default function AppartementS3Page() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(1)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/s3-new-dining-area-gallery.png"
-                  alt="Salle à manger S+3 - Espace repas avec miroirs"
+                  src="/s3-new-master-bedroom-gallery.png"
+                  alt="Suite parentale S+3 - Chambre principale moderne"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -579,19 +456,7 @@ export default function AppartementS3Page() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(2)}>
-              <div className="relative h-64 overflow-hidden">
-                <Image
-                  src="/s3-new-open-living-gallery.png"
-                  alt="Salon S+3 - Espace de vie ouvert et moderne"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-              </div>
-            </div>
-
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(3)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
                   src="/s3-new-kitchen-island-gallery.png"
@@ -603,15 +468,161 @@ export default function AppartementS3Page() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(4)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/s3-new-master-bedroom-gallery.png"
-                  alt="Suite parentale S+3 - Chambre principale moderne"
+                  src="/s3-new-kitchen-modern-gallery.jpeg"
+                  alt="Cuisine S+3 - Design contemporain"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+              </div>
+            </div>
+
+            <div className="relative group cursor-pointer">
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/s3-new-dining-area-gallery.png"
+                  alt="Salle à manger S+3 - Espace repas avec miroirs"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+              </div>
+            </div>
+
+            <div className="relative group cursor-pointer">
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/s3-new-open-living-gallery.png"
+                  alt="Salon S+3 - Espace de vie ouvert et moderne"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact-section" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Intéressé par cet Appartement ?</h2>
+              <p className="text-lg text-gray-600">
+                L'appartement S+3 représente 24% de notre offre et convient parfaitement aux grandes familles.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12">
+              <Card className="rounded-none border-0 shadow-lg">
+                <CardContent className="p-8">
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">Demande d'Information - S+3</h3>
+                  <form className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
+                        <input
+                          type="text"
+                          className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                          placeholder="Votre prénom"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                        <input
+                          type="text"
+                          className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                          placeholder="Votre nom"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                      <input
+                        type="email"
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                        placeholder="Isbimmobiliere@gmail.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+                      <input
+                        type="tel"
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                        placeholder="58 666 963"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Surface souhaitée</label>
+                      <select className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent">
+                        <option>139 m² - 160 m²</option>
+                        <option>160 m² - 180 m²</option>
+                        <option>180 m² - 208 m²</option>
+                        <option>Indifférent</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                      <textarea
+                        rows={4}
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                        placeholder="Questions spécifiques sur l'appartement S+3..."
+                      ></textarea>
+                    </div>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full rounded-none bg-custom-beige hover:bg-custom-beige"
+                    >
+                      Envoyer la Demande
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Informations Pratiques</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <Home className="h-5 w-5 text-custom-beige mt-1" />
+                      <div>
+                        <div className="font-semibold text-gray-900">Disponibilité</div>
+                        <div className="text-gray-600">22 appartements S+3 disponibles</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Ruler className="h-5 w-5 text-custom-beige mt-1" />
+                      <div>
+                        <div className="font-semibold text-gray-900">Surfaces</div>
+                        <div className="text-gray-600">De 139 m² à 208 m²</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Trees className="h-5 w-5 text-custom-beige mt-1" />
+                      <div>
+                        <div className="font-semibold text-gray-900">Jardin privé</div>
+                        <div className="text-gray-600">0-28 m² (disponible uniquement pour certains appartements)</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full rounded-none border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-white bg-transparent"
+                  >
+                    <MessageCircle className="h-5 w-5 mr-2" />
+                    Discuter sur WhatsApp
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -652,7 +663,7 @@ export default function AppartementS3Page() {
             <Link href="/logements/duplex">
               <Card className="rounded-none border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
                 <div className="relative h-48">
-                  <Image src="/duplex-1.png" alt="Duplex" fill className="object-cover" />
+                  <Image src="/luxury-duplex-interior.png" alt="Duplex" fill className="object-cover" />
                 </div>
                 <CardContent className="p-6">
                   <h4 className="text-lg font-bold text-gray-900 mb-2">Duplex</h4>
@@ -678,64 +689,16 @@ export default function AppartementS3Page() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge className="mb-4 bg-custom-beige-light text-custom-beige-800 rounded-none">Contact</Badge>
-            <h2 className="text-6xl font-bold text-gray-900 mb-6">Contactez-nous</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Notre équipe est à votre disposition pour répondre à toutes vos questions.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Informations de contact</h3>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <Phone className="h-6 w-6 text-custom-beige mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Téléphone</h4>
-                    <p className="text-gray-600">+216 58 666 963</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <Mail className="h-6 w-6 text-custom-beige mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Email</h4>
-                    <p className="text-gray-600">contact@isbimmobiliere.com</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <MapPin className="h-6 w-6 text-custom-beige mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Adresse</h4>
-                    <p className="text-gray-600">Chotrana 3, La Soukra, Tunis</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8">
-                <a
-                  href="https://wa.me/21658666963"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-custom-beige hover:bg-custom-beige-hover text-white px-4 py-2 rounded-none flex items-center space-x-2 transition-colors duration-200 font-medium w-fit"
-                  aria-label="Contactez-nous sur WhatsApp"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  <span>Contactez-nous sur WhatsApp</span>
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <ContactForm />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* WhatsApp Float Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          size="lg"
+          variant="outline"
+          className="rounded-full border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-white bg-white shadow-lg"
+        >
+          <MessageCircle className="h-6 w-6" />
+        </Button>
+      </div>
 
       {/* Plan Lightbox */}
       <PlanLightbox
@@ -743,22 +706,6 @@ export default function AppartementS3Page() {
         onClose={() => setShowPlanLightbox(false)}
         plans={s3Plans}
         initialIndex={lightboxStartIndex}
-      />
-
-      {/* Cover Lightbox */}
-      <CoverLightbox
-        isOpen={showCoverLightbox}
-        onClose={() => setShowCoverLightbox(false)}
-        images={coverImages}
-        initialIndex={coverLightboxIndex}
-      />
-
-      {/* Gallery Lightbox */}
-      <GalleryLightbox
-        isOpen={showGalleryLightbox}
-        onClose={() => setShowGalleryLightbox(false)}
-        images={galleryImages}
-        initialIndex={galleryLightboxIndex}
       />
     </div>
   )

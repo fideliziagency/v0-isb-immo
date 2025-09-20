@@ -230,23 +230,14 @@ export default function BlogPage() {
               Abonnez-vous à notre newsletter pour recevoir nos derniers articles, conseils d'experts et actualités
               immobilières directement dans votre boîte mail.
             </p>
-            <form
-              action="https://formspree.io/f/YOUR_FORM_ID"
-              method="POST"
-              className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-            >
-              <input type="hidden" name="formType" value="newsletter" />
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
-                name="email"
-                required
                 placeholder="Votre adresse email"
                 className="flex-1 px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
               />
-              <Button type="submit" className="rounded-none bg-custom-beige hover:bg-custom-beige-hover">
-                S'abonner
-              </Button>
-            </form>
+              <Button className="rounded-none bg-custom-beige hover:bg-custom-beige-hover">S'abonner</Button>
+            </div>
             <p className="text-xs text-gray-500 mt-4">Pas de spam, désabonnement possible à tout moment.</p>
           </div>
         </div>

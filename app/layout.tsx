@@ -2,7 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import Footer from "@/components/footer"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -70,10 +69,7 @@ export default function RootLayout({
         <meta name="geo.position" content="36.8667;10.2167" />
         <meta name="ICBM" content="36.8667, 10.2167" />
       </head>
-      <body className={inter.className}>
-        {children}
-        <Footer />
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }

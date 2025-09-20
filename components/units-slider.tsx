@@ -1,8 +1,6 @@
 "use client"
 
-import type React from "react"
-
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -36,7 +34,7 @@ const properties = [
     type: "S+2",
     title: "Appartement S+2",
     description: "Parfait pour les familles avec enfants",
-    image: "/s2-salon-moderne-elegant.png",
+    image: "/s2-modern-living-room-new.png",
     surface: "87-136 m²",
     chambres: "2 chambres",
     sallesBain: "1 salle de bain",
@@ -57,7 +55,7 @@ const properties = [
     type: "S+3",
     title: "Appartement S+3",
     description: "Espace généreux pour grandes familles",
-    image: "/s3-salon-salle-manger-luxe.png",
+    image: "/s3-modern-living-dining-new.png",
     surface: "139-208 m²",
     chambres: "une Suite parentale",
     sallesBain: "2 chambres",
@@ -99,7 +97,7 @@ const properties = [
     type: "Villa",
     title: "Villa Individuelle",
     description: "Maison individuelle avec jardin privé",
-    image: "/villa-h1.jpg",
+    image: "/villa-modern-pool-exterior.jpeg",
     surface: "353-357 m²",
     chambres: "3 Suites",
     sallesBain: "Piscine privée",
@@ -119,11 +117,6 @@ const properties = [
 
 export default function UnitsSlider() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [touchStart, setTouchStart] = useState<number | null>(null)
-  const [touchEnd, setTouchEnd] = useState<number | null>(null)
-  const sliderRef = useRef<HTMLDivElement>(null)
-
-  const minSwipeDistance = 50
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % properties.length)
@@ -135,29 +128,6 @@ export default function UnitsSlider() {
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index)
-  }
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
-
-    if (isLeftSwipe) {
-      nextSlide()
-    } else if (isRightSwipe) {
-      prevSlide()
-    }
   }
 
   return (
@@ -172,13 +142,7 @@ export default function UnitsSlider() {
 
         <div className="relative max-w-6xl mx-auto">
           {/* Main Slider */}
-          <div
-            className="overflow-hidden rounded-none"
-            ref={sliderRef}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-          >
+          <div className="overflow-hidden rounded-none">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -189,56 +153,23 @@ export default function UnitsSlider() {
                     <div className="grid lg:grid-cols-2 gap-0">
                       {/* Image */}
                       <div className="relative h-96 lg:h-auto">
-                        <div className="block w-full h-full">
-                          <Image
-                            src={property.image || "/placeholder.svg"}
-                            alt={property.title}
-                            fill
-                            className="object-cover hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
+                        <Image
+                          src={property.image || "/placeholder.svg"}
+                          alt={property.title}
+                          fill
+                          className="object-cover"
+                        />
                         <div className="absolute top-4 left-4">
-                          <Badge className="bg-custom-beige text-black rounded-none font-semibold shadow-sm">
-                            {property.type}
-                          </Badge>
+                          <Badge className="bg-custom-beige text-white rounded-none">{property.type}</Badge>
                         </div>
                         <div className="absolute top-4 right-4">
-                          <Badge className="bg-white/95 text-gray-900 rounded-none font-semibold shadow-sm border border-gray-200">
-                            {property.disponibles}
-                          </Badge>
+                          <Badge className="bg-white text-gray-900 rounded-none">{property.disponibles}</Badge>
                         </div>
-
-                        {index === currentIndex && (
-                          <>
-                            <button
-                              onClick={(e) => {
-                                e.preventDefault()
-                                prevSlide()
-                              }}
-                              className="absolute left-4 top-1/2 -translate-y-1/2 bg-custom-beige/90 hover:bg-custom-beige p-2 rounded-full shadow-lg transition-all duration-200 z-20 border border-white"
-                            >
-                              <ChevronLeft className="h-5 w-5 text-white" />
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.preventDefault()
-                                nextSlide()
-                              }}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 bg-custom-beige/90 hover:bg-custom-beige p-2 rounded-full shadow-lg transition-all duration-200 z-20 border border-white"
-                            >
-                              <ChevronRight className="h-5 w-5 text-white" />
-                            </button>
-                          </>
-                        )}
                       </div>
 
                       {/* Content */}
                       <CardContent className="p-8 flex flex-col justify-center">
-                        <Link href={property.href} className="group">
-                          <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-[#b7b0a0] transition-colors duration-200">
-                            {property.title}
-                          </h3>
-                        </Link>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-3">{property.title}</h3>
                         <p className="text-gray-600 mb-6">{property.description}</p>
 
                         {/* Specifications */}
@@ -297,6 +228,20 @@ export default function UnitsSlider() {
               ))}
             </div>
           </div>
+
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-200 z-10"
+          >
+            <ChevronLeft className="h-6 w-6 text-gray-700" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-200 z-10"
+          >
+            <ChevronRight className="h-6 w-6 text-gray-700" />
+          </button>
 
           {/* Dots Navigation */}
           <div className="flex justify-center space-x-2 mt-8">

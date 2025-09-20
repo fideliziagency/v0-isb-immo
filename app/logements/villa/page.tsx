@@ -1,14 +1,10 @@
 "use client"
 
-import type React from "react"
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import PlanLightbox from "@/components/plan-lightbox"
-import CoverLightbox from "@/components/cover-lightbox"
-import GalleryLightbox from "@/components/gallery-lightbox"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import {
   ArrowLeft,
   Home,
@@ -21,157 +17,31 @@ import {
   Zap,
   Droplets,
   Wind,
+  Phone,
   MessageCircle,
   Eye,
   Trees,
-  Camera,
-  Tv,
-  Car,
-  Phone,
-  Mail,
-  MapPin,
   ChevronLeft,
   ChevronRight,
+  Camera,
+  Tv,
+  Shirt,
+  Car,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import ContactForm from "@/components/contact-form"
 
 export default function VillaPage() {
   const [showPlanLightbox, setShowPlanLightbox] = useState(false)
   const [currentPlanIndex, setCurrentPlanIndex] = useState(0)
   const [lightboxStartIndex, setLightboxStartIndex] = useState(0)
-  const [currentHeroImageIndex, setCurrentHeroImageIndex] = useState(0)
-  const [showCoverLightbox, setShowCoverLightbox] = useState(false)
-  const [coverLightboxIndex, setCoverLightboxIndex] = useState(0)
-  const [showGalleryLightbox, setShowGalleryLightbox] = useState(false)
-  const [galleryLightboxIndex, setGalleryLightboxIndex] = useState(0)
-  const [villaSpecificPlans, setVillaSpecificPlans] = useState<typeof villaPlans>([])
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
-  const heroGalleryImages = [
-    {
-      src: "/villa-h1-exterior.jpg",
-      alt: "Extérieur Villa - Façade moderne avec jardin paysager",
-    },
-    {
-      src: "/villa-h5.jpg",
-      alt: "Salon Villa - Salon moderne avec grandes baies vitrées",
-    },
-    {
-      src: "/villa-h3.jpg",
-      alt: "Salon Villa - Salon contemporain avec TV murale et lustre design",
-    },
-    {
-      src: "/villa-h2.jpg",
-      alt: "Cuisine Villa - Cuisine moderne avec îlot central en marbre",
-    },
-    {
-      src: "/villa-h6.jpg",
-      alt: "Suite Villa - Chambre moderne avec design contemporain",
-    },
-    {
-      src: "/villa-h4.jpg",
-      alt: "Piscine Villa - Terrasse avec piscine et salon extérieur",
-    },
-  ]
-
-  const galleryImages = [
-    {
-      src: "/villa-h1-exterior.jpg",
-      alt: "Extérieur Villa - Façade moderne avec jardin paysager",
-    },
-    {
-      src: "/villa-h5.jpg",
-      alt: "Salon Villa - Salon moderne avec grandes baies vitrées",
-    },
-    {
-      src: "/villa-h3.jpg",
-      alt: "Salon Villa - Salon contemporain avec TV murale et lustre design",
-    },
-    {
-      src: "/villa-h2.jpg",
-      alt: "Cuisine Villa - Cuisine moderne avec îlot central en marbre",
-    },
-    {
-      src: "/villa-h6.jpg",
-      alt: "Suite Villa - Chambre moderne avec design contemporain",
-    },
-    {
-      src: "/villa-h4.jpg",
-      alt: "Piscine Villa - Terrasse avec piscine et salon extérieur",
-    },
-  ]
-
-  const nextHeroImage = () => {
-    setCurrentHeroImageIndex((prev) => (prev + 1) % heroGalleryImages.length)
-  }
-
-  const prevHeroImage = () => {
-    setCurrentHeroImageIndex((prev) => (prev - 1 + heroGalleryImages.length) % heroGalleryImages.length)
-  }
-
-  const openCoverLightbox = (index: number) => {
-    setCoverLightboxIndex(index)
-    setShowCoverLightbox(true)
-  }
-
-  const openGalleryLightbox = (index: number) => {
-    setGalleryLightboxIndex(index)
-    setShowGalleryLightbox(true)
-  }
-
-  const openVillaLightbox = (villaNumber: number, planIndex: number) => {
-    const villaStartIndex = (villaNumber - 1) * 2
-    let villaPlansOnly
-    if (villaNumber === 1) {
-      // Pour Villa 1, inverser l'ordre : sous-sol en premier, rez-de-chaussée en second
-      villaPlansOnly = [villaPlans[villaStartIndex + 1], villaPlans[villaStartIndex]]
-    } else {
-      // Pour toutes les autres villas, garder l'ordre normal
-      villaPlansOnly = [villaPlans[villaStartIndex], villaPlans[villaStartIndex + 1]]
-    }
-    setCurrentPlanIndex(planIndex)
-    setLightboxStartIndex(planIndex)
-    setShowPlanLightbox(true)
-    setVillaSpecificPlans(villaPlansOnly)
-  }
-
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe) {
-      nextHeroImage()
-    }
-    if (isRightSwipe) {
-      prevHeroImage()
-    }
-  }
 
   const specifications = [
     { icon: Ruler, label: "Surface", value: "353-357 m²" },
-    { icon: Bed, label: "RDC", value: "Salon, salle à manger, cuisine" },
-    { icon: Bath, label: "Étage", value: "3 suites" },
+    { icon: Bed, label: "Chambres", value: "4 chambres" },
+    { icon: Bath, label: "Salles de bain", value: "3 salles de bain" },
     { icon: Trees, label: "Jardin", value: "60-219 m²" },
     { icon: Home, label: "Niveaux", value: "2 niveaux + sous-sol" },
-    { icon: Droplets, label: "Piscine privée", value: "Incluse" },
   ]
 
   const equipments = [
@@ -182,6 +52,7 @@ export default function VillaPage() {
     { icon: Camera, text: "Interphone vidéo couleur" },
     { icon: Tv, text: "Pré-installation satellite et internet fibre" },
     { icon: Shield, text: "Isolation thermique et phonique renforcée" },
+    { icon: Shirt, text: "Dressing intégré dans toutes les suites" },
     { icon: Droplets, text: "Piscine privée incluse" },
     { icon: Car, text: "Garage privé sous-sol" },
   ]
@@ -195,16 +66,17 @@ export default function VillaPage() {
     { icon: Wind, label: "VMC double flux" },
   ]
 
+  // Generate 6 Villa unit plans
   const villaPlans = [
     {
       src: "/villa-1-ground-floor.png",
       alt: "Plan Villa 1 - Rez-de-chaussée",
-      title: "Plan Villa 1 - sous-sol - 357 m²",
+      title: "Plan Villa 1 - Rez-de-chaussée - 357 m²",
     },
     {
       src: "/villa-1-upper-floor.png",
-      alt: "Plan Villa 1 - Sous-sol",
-      title: "Plan Villa 1 - Rez-de-chaussée - 357 m²",
+      alt: "Plan Villa 1 - Étage",
+      title: "Plan Villa 1 - Étage - 357 m²",
     },
     {
       src: "/villa-2-ground-floor.png",
@@ -213,8 +85,8 @@ export default function VillaPage() {
     },
     {
       src: "/villa-2-upper-floor.png",
-      alt: "Plan Villa 2 - Sous-sol",
-      title: "Plan Villa 2 - Sous-sol - 355 m²",
+      alt: "Plan Villa 2 - Étage",
+      title: "Plan Villa 2 - Étage - 355 m²",
     },
     {
       src: "/villa-3-ground-floor.png",
@@ -223,8 +95,8 @@ export default function VillaPage() {
     },
     {
       src: "/villa-3-upper-floor.png",
-      alt: "Plan Villa 3 - Sous-sol",
-      title: "Plan Villa 3 - Sous-sol - 354 m²",
+      alt: "Plan Villa 3 - Étage",
+      title: "Plan Villa 3 - Étage - 354 m²",
     },
     {
       src: "/villa-4-ground-floor.png",
@@ -233,8 +105,8 @@ export default function VillaPage() {
     },
     {
       src: "/villa-4-upper-floor.png",
-      alt: "Plan Villa 4 - Sous-sol",
-      title: "Plan Villa 4 - Sous-sol - 353 m²",
+      alt: "Plan Villa 4 - Étage",
+      title: "Plan Villa 4 - Étage - 353 m²",
     },
     {
       src: "/villa-5-ground-floor.png",
@@ -243,8 +115,8 @@ export default function VillaPage() {
     },
     {
       src: "/villa-5-upper-floor.png",
-      alt: "Plan Villa 5 - Sous-sol",
-      title: "Plan Villa 5 - Sous-sol - 356 m²",
+      alt: "Plan Villa 5 - Étage",
+      title: "Plan Villa 5 - Étage - 356 m²",
     },
     {
       src: "/villa-6-ground-floor.png",
@@ -253,17 +125,22 @@ export default function VillaPage() {
     },
     {
       src: "/villa-6-upper-floor.png",
-      alt: "Plan Villa 6 - Sous-sol",
-      title: "Plan Villa 6 - Sous-sol - 355 m²",
+      alt: "Plan Villa 6 - Étage",
+      title: "Plan Villa 6 - Étage - 355 m²",
     },
   ]
 
   const nextPlan = () => {
-    setCurrentPlanIndex((prev) => (prev + 1) % villaSpecificPlans.length)
+    setCurrentPlanIndex((prev) => (prev + 1) % villaPlans.length)
   }
 
   const prevPlan = () => {
-    setCurrentPlanIndex((prev) => (prev - 1 + villaSpecificPlans.length) % villaSpecificPlans.length)
+    setCurrentPlanIndex((prev) => (prev - 1 + villaPlans.length) % villaPlans.length)
+  }
+
+  const openLightbox = (index: number) => {
+    setLightboxStartIndex(index)
+    setShowPlanLightbox(true)
   }
 
   const scrollToContact = () => {
@@ -286,7 +163,24 @@ export default function VillaPage() {
                 <span className="text-lg font-bold text-gray-900">The Life Residence</span>
               </div>
             </Link>
-            <div className="flex items-center space-x-3"></div>
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-none border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-white bg-transparent"
+              >
+                <Phone className="h-4 w-4 mr-2" />
+                Appeler
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="rounded-none border-custom-beige bg-white text-custom-beige hover:bg-custom-beige hover:text-white"
+              >
+                <MessageCircle className="h-4 w-4 mr-2" />
+                WhatsApp
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -309,7 +203,11 @@ export default function VillaPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <Badge className="mb-4 bg-custom-beige text-white rounded-none">Villa Individuelle</Badge>
-              <h1 className="text-4xl font-bold text-gray-900 mb-6">Villa individuelle</h1>
+              <h1 className="text-4xl font-bold text-gray-900 mb-6">Villa Individuelle</h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Maison individuelle avec jardin privé et piscine. L'art de vivre à la tunisienne dans un cadre
+                d'exception avec des prestations haut de gamme.
+              </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                 {specifications.map((spec, index) => (
@@ -322,56 +220,20 @@ export default function VillaPage() {
                   </div>
                 ))}
               </div>
+
+              {/* Removed the "Demander une Visite" button */}
             </div>
 
             <div className="relative">
-              <div
-                className="relative h-96 overflow-hidden"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                <Image
-                  src={heroGalleryImages[currentHeroImageIndex].src || "/placeholder.svg"}
-                  alt={heroGalleryImages[currentHeroImageIndex].alt}
-                  width={600}
-                  height={400}
-                  className="w-full h-full object-cover transition-opacity duration-300 cursor-pointer"
-                  onClick={() => openCoverLightbox(currentHeroImageIndex)}
-                />
-
-                <button
-                  onClick={prevHeroImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200 z-10"
-                  aria-label="Image précédente"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-
-                <button
-                  onClick={nextHeroImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors duration-200 z-10"
-                  aria-label="Image suivante"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                  {heroGalleryImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentHeroImageIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                        index === currentHeroImageIndex ? "bg-white" : "bg-white/50"
-                      }`}
-                      aria-label={`Aller à l'image ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-
+              <Image
+                src="/villa-new-exterior-view.png"
+                alt="Villa Individuelle - Vue extérieure avec piscine et jardin"
+                width={600}
+                height={400}
+                className="w-full h-96 object-cover"
+              />
               <div className="absolute top-4 right-4">
-                <Badge className="bg-custom-beige text-white rounded-none">6 Unités disponibles</Badge>
+                <Badge className="bg-custom-beige text-white rounded-none">6 Unités Disponibles</Badge>
               </div>
             </div>
           </div>
@@ -379,204 +241,98 @@ export default function VillaPage() {
       </section>
 
       {/* Plans Section */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-6">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Plans et agencement</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Plans et Agencement</h2>
+            <p className="text-lg text-gray-600">Un agencement pensé pour la vie de famille</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* Villa 1 */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="grid grid-cols-2 gap-2 p-4">
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(1, 0)}>
-                  <Image
-                    src="/villa-1-ground-floor.png"
-                    alt="Plan Villa 1 - RDC"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="max-w-4xl mx-auto">
+            <Card className="rounded-none border-0 shadow-lg overflow-hidden">
+              <div className="relative">
+                {/* Plan Slider */}
+                <div className="relative h-96 overflow-hidden">
+                  <div
+                    className="flex transition-transform duration-500 ease-in-out h-full"
+                    style={{ transform: `translateX(-${currentPlanIndex * 100}%)` }}
+                  >
+                    {villaPlans.map((plan, index) => (
+                      <div
+                        key={index}
+                        className="w-full flex-shrink-0 relative cursor-pointer group"
+                        onClick={() => openLightbox(index)}
+                      >
+                        <Image
+                          src={plan.src || "/placeholder.svg"}
+                          alt={plan.alt}
+                          fill
+                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+                          <Button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-none bg-custom-beige hover:bg-custom-beige">
+                            <Eye className="h-4 w-4 mr-2" />
+                            Voir en grand
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(1, 1)}>
-                  <Image
-                    src="/villa-1-upper-floor.png"
-                    alt="Plan Villa 1 - Sous-sol"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-              </div>
-              <div className="px-4 pb-4">
-                <h3 className="text-lg font-bold text-gray-900 text-center">Villa 1</h3>
-                <p className="text-sm text-gray-600 text-center">357 m² • RDC + Étage</p>
-              </div>
-            </div>
 
-            {/* Villa 2 */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="grid grid-cols-2 gap-2 p-4">
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(2, 0)}>
-                  <Image
-                    src="/villa-2-ground-floor.png"
-                    alt="Plan Villa 2 - RDC"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
+                  {/* Navigation Arrows */}
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={prevPlan}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border-gray-300 hover:bg-white z-10"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={nextPlan}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 border-gray-300 hover:bg-white z-10"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
                 </div>
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(2, 1)}>
-                  <Image
-                    src="/villa-2-upper-floor.png"
-                    alt="Plan Villa 2 - Sous-sol"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-              </div>
-              <div className="px-4 pb-4">
-                <h3 className="text-lg font-bold text-gray-900 text-center">Villa 2</h3>
-                <p className="text-sm text-gray-600 text-center">355 m² • RDC + Étage</p>
-              </div>
-            </div>
 
-            {/* Villa 3 */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="grid grid-cols-2 gap-2 p-4">
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(3, 0)}>
-                  <Image
-                    src="/villa-3-ground-floor.png"
-                    alt="Plan Villa 3 - RDC"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Plan Info */}
+                <CardContent className="p-6 text-center">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Plan Villa - Niveau {Math.floor(currentPlanIndex / 2) + 1} -{" "}
+                    {currentPlanIndex % 2 === 0 ? "RDC" : "Étage"}
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Agencement familial avec salon spacieux, cuisine équipée, 4 suites et jardin paysager avec piscine.
+                  </p>
+                  <div className="flex justify-center space-x-4">
+                    <Button
+                      onClick={() => openLightbox(currentPlanIndex)}
+                      variant="outline"
+                      className="rounded-none border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-white"
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      Voir en grand
+                    </Button>
                   </div>
-                </div>
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(3, 1)}>
-                  <Image
-                    src="/villa-3-upper-floor.png"
-                    alt="Plan Villa 3 - Sous-sol"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-              </div>
-              <div className="px-4 pb-4">
-                <h3 className="text-lg font-bold text-gray-900 text-center">Villa 3</h3>
-                <p className="text-sm text-gray-600 text-center">354 m² • RDC + Étage</p>
-              </div>
-            </div>
+                </CardContent>
 
-            {/* Villa 4 */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="grid grid-cols-2 gap-2 p-4">
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(4, 0)}>
-                  <Image
-                    src="/villa-4-ground-floor.png"
-                    alt="Plan Villa 4 - RDC"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(4, 1)}>
-                  <Image
-                    src="/villa-4-upper-floor.png"
-                    alt="Plan Villa 4 - Sous-sol"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
+                {/* Dots Navigation */}
+                <div className="flex justify-center space-x-1 pb-4 overflow-x-auto">
+                  {villaPlans.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentPlanIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-colors flex-shrink-0 ${
+                        index === currentPlanIndex ? "bg-custom-beige" : "bg-gray-300"
+                      }`}
+                    />
+                  ))}
                 </div>
               </div>
-              <div className="px-4 pb-4">
-                <h3 className="text-lg font-bold text-gray-900 text-center">Villa 4</h3>
-                <p className="text-sm text-gray-600 text-center">353 m² • RDC + Étage</p>
-              </div>
-            </div>
-
-            {/* Villa 5 */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="grid grid-cols-2 gap-2 p-4">
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(5, 0)}>
-                  <Image
-                    src="/villa-5-ground-floor.png"
-                    alt="Plan Villa 5 - RDC"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(5, 1)}>
-                  <Image
-                    src="/villa-5-upper-floor.png"
-                    alt="Plan Villa 5 - Sous-sol"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-              </div>
-              <div className="px-4 pb-4">
-                <h3 className="text-lg font-bold text-gray-900 text-center">Villa 5</h3>
-                <p className="text-sm text-gray-600 text-center">356 m² • RDC + Étage</p>
-              </div>
-            </div>
-
-            {/* Villa 6 */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="grid grid-cols-2 gap-2 p-4">
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(6, 0)}>
-                  <Image
-                    src="/villa-6-ground-floor.png"
-                    alt="Plan Villa 6 - Rez-de-chaussée"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-                <div className="relative h-48 cursor-pointer group" onClick={() => openVillaLightbox(6, 1)}>
-                  <Image
-                    src="/villa-6-upper-floor.png"
-                    alt="Plan Villa 6 - Sous-sol"
-                    fill
-                    className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Eye className="h-4 w-4 text-custom-beige opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </div>
-              </div>
-              <div className="px-4 pb-4">
-                <h3 className="text-lg font-bold text-gray-900 text-center">Villa 6</h3>
-                <p className="text-sm text-gray-600 text-center">355 m² • RDC + Étage</p>
-              </div>
-            </div>
+            </Card>
           </div>
         </div>
       </section>
@@ -585,7 +341,7 @@ export default function VillaPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Caractéristiques techniques</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Caractéristiques Techniques</h2>
             <p className="text-lg text-gray-600">Des équipements d'exception pour un confort absolu</p>
           </div>
 
@@ -601,7 +357,7 @@ export default function VillaPage() {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Équipements inclus</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Équipements Inclus</h3>
             <div className="flex flex-wrap gap-3 justify-center">
               {equipments.map((equipment, index) => (
                 <Badge
@@ -622,16 +378,16 @@ export default function VillaPage() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Galerie photos</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Galerie Photos</h2>
             <p className="text-lg text-gray-600">Découvrez l'art de vivre en villa</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(0)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/villa-h1-exterior.jpg"
-                  alt="Extérieur Villa - Façade moderne avec jardin paysager"
+                  src="/villa-spacious-living-room.jpeg"
+                  alt="Salon Villa - Grand salon spacieux"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -639,11 +395,11 @@ export default function VillaPage() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(1)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/villa-h5.jpg"
-                  alt="Salon Villa - Salon moderne avec grandes baies vitrées"
+                  src="/villa-modern-kitchen-island.jpeg"
+                  alt="Cuisine Villa - Cuisine moderne avec îlot"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -651,11 +407,11 @@ export default function VillaPage() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(2)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/villa-h3.jpg"
-                  alt="Salon Villa - Salon contemporain avec TV murale et lustre design"
+                  src="/villa-master-bedroom-luxury.jpeg"
+                  alt="Suite parentale Villa - Chambre principale luxueuse"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -663,11 +419,11 @@ export default function VillaPage() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(3)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/villa-h2.jpg"
-                  alt="Cuisine Villa - Cuisine moderne avec îlot central en marbre"
+                  src="/villa-pool-terrace-exterior.jpeg"
+                  alt="Piscine Villa - Terrasse avec piscine"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -675,11 +431,11 @@ export default function VillaPage() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(4)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/villa-h6.jpg"
-                  alt="Suite Villa - Chambre moderne avec design contemporain"
+                  src="/villa-contemporary-living-wine.jpeg"
+                  alt="Salon Villa - Salon contemporain avec cave à vin"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -687,11 +443,11 @@ export default function VillaPage() {
               </div>
             </div>
 
-            <div className="relative group cursor-pointer" onClick={() => openGalleryLightbox(5)}>
+            <div className="relative group cursor-pointer">
               <div className="relative h-64 overflow-hidden">
                 <Image
-                  src="/villa-h4.jpg"
-                  alt="Piscine Villa - Terrasse avec piscine et salon extérieur"
+                  src="/villa-exterior-development-view.jpeg"
+                  alt="Extérieur Villa - Vue d'ensemble du développement"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -702,10 +458,135 @@ export default function VillaPage() {
         </div>
       </section>
 
+      {/* Contact Section */}
+      <section id="contact-section" className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Intéressé par cette Villa ?</h2>
+              <p className="text-lg text-gray-600">
+                La villa individuelle représente l'excellence de notre offre avec seulement 6 unités disponibles.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12">
+              <Card className="rounded-none border-0 shadow-lg">
+                <CardContent className="p-8">
+                  <h3 className="text-xl font-bold text-gray-900 mb-6">Demande d'Information - Villa</h3>
+                  <form className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
+                        <input
+                          type="text"
+                          className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                          placeholder="Votre prénom"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                        <input
+                          type="text"
+                          className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                          placeholder="Votre nom"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                      <input
+                        type="email"
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                        placeholder="Isbimmobiliere@gmail.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+                      <input
+                        type="tel"
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                        placeholder="58 666 963"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Villa souhaitée</label>
+                      <select className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent">
+                        <option>Villa 1 - 357 m²</option>
+                        <option>Villa 2 - 355 m²</option>
+                        <option>Villa 3 - 354 m²</option>
+                        <option>Villa 4 - 353 m²</option>
+                        <option>Villa 5 - 356 m²</option>
+                        <option>Villa 6 - 355 m²</option>
+                        <option>Indifférent</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                      <textarea
+                        rows={4}
+                        className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-custom-beige focus:border-transparent"
+                        placeholder="Questions spécifiques sur la villa individuelle..."
+                      ></textarea>
+                    </div>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full rounded-none bg-custom-beige hover:bg-custom-beige"
+                    >
+                      Envoyer la Demande
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Informations Pratiques</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <Home className="h-5 w-5 text-custom-beige mt-1" />
+                      <div>
+                        <div className="font-semibold text-gray-900">Disponibilité</div>
+                        <div className="text-gray-600">6 villas individuelles disponibles</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Ruler className="h-5 w-5 text-custom-beige mt-1" />
+                      <div>
+                        <div className="font-semibold text-gray-900">Surfaces</div>
+                        <div className="text-gray-600">De 353 m² à 357 m²</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Trees className="h-5 w-5 text-custom-beige mt-1" />
+                      <div>
+                        <div className="font-semibold text-gray-900">Jardin privé</div>
+                        <div className="text-gray-600">60-219 m² de jardin paysager</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full rounded-none border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-white bg-transparent"
+                  >
+                    <MessageCircle className="h-5 w-5 mr-2" />
+                    Discuter sur WhatsApp
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Navigation to Other Types */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">Découvrez nos autres logements</h3>
+          <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">Découvrez Nos Autres Logements</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link href="/logements/s1">
               <Card className="rounded-none border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
@@ -745,7 +626,7 @@ export default function VillaPage() {
                 </div>
                 <CardContent className="p-6">
                   <h4 className="text-lg font-bold text-gray-900 mb-2">Appartement S+3</h4>
-                  <p className="text-gray-600 mb-3">4 pièces • 139-208 m² • 22 unités</p>
+                  <p className="text-gray-600 mb-3">4 pièces • 110-125 m² • 22 unités</p>
                   <Button className="w-full rounded-none bg-custom-beige hover:bg-custom-beige">Découvrir</Button>
                 </CardContent>
               </Card>
@@ -754,7 +635,7 @@ export default function VillaPage() {
             <Link href="/logements/duplex">
               <Card className="rounded-none border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
                 <div className="relative h-48">
-                  <Image src="/duplex-1.png" alt="Duplex" fill className="object-cover" />
+                  <Image src="/luxury-duplex-interior.png" alt="Duplex" fill className="object-cover" />
                 </div>
                 <CardContent className="p-6">
                   <h4 className="text-lg font-bold text-gray-900 mb-2">Duplex</h4>
@@ -767,72 +648,12 @@ export default function VillaPage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact-section" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge className="mb-4 bg-custom-beige-light text-custom-beige-800 rounded-none">Contact</Badge>
-            <h2 className="text-6xl font-bold text-gray-900 mb-6">Contactez-nous</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Notre équipe est à votre disposition pour répondre à toutes vos questions.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Informations de contact</h3>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <Phone className="h-6 w-6 text-custom-beige mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Téléphone</h4>
-                    <p className="text-gray-600">+216 58 666 963</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <Mail className="h-6 w-6 text-custom-beige mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Email</h4>
-                    <p className="text-gray-600">contact@isbimmobiliere.com</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <MapPin className="h-6 w-6 text-custom-beige mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Adresse</h4>
-                    <p className="text-gray-600">Chotrana 3, La Soukra, Tunis</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* WhatsApp Button */}
-              <div className="mt-8">
-                <a
-                  href="https://wa.me/21658666963"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-custom-beige hover:bg-custom-beige-hover text-white px-4 py-2 rounded-none flex items-center space-x-2 transition-colors duration-200 font-medium w-fit"
-                  aria-label="Contactez-nous sur WhatsApp"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  <span>Contactez-nous sur WhatsApp</span>
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <ContactForm />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* WhatsApp Float Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           size="lg"
           variant="outline"
-          className="rounded-full border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-black bg-white shadow-lg"
+          className="rounded-full border-custom-beige text-custom-beige hover:bg-custom-beige hover:text-white bg-white shadow-lg"
         >
           <MessageCircle className="h-6 w-6" />
         </Button>
@@ -841,25 +662,9 @@ export default function VillaPage() {
       {/* Plan Lightbox */}
       <PlanLightbox
         isOpen={showPlanLightbox}
-        plans={villaSpecificPlans}
+        plans={villaPlans}
         startIndex={lightboxStartIndex}
         onClose={() => setShowPlanLightbox(false)}
-      />
-
-      {/* Cover Lightbox */}
-      <CoverLightbox
-        isOpen={showCoverLightbox}
-        onClose={() => setShowCoverLightbox(false)}
-        images={heroGalleryImages}
-        initialIndex={coverLightboxIndex}
-      />
-
-      {/* Gallery Lightbox */}
-      <GalleryLightbox
-        isOpen={showGalleryLightbox}
-        onClose={() => setShowGalleryLightbox(false)}
-        images={galleryImages}
-        initialIndex={galleryLightboxIndex}
       />
     </div>
   )
