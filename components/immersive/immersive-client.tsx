@@ -33,7 +33,7 @@ import {
   SCENES,
   type Typology,
 } from "./data"
-import { Reveal, RiseWords, Parallax, Counter, TiltCard, Magnetic, ScrollProgress, DrawLine } from "./primitives"
+import { Reveal, RiseWords, Parallax, Counter, TiltCard, Magnetic, ScrollProgress, DrawLine, DepthPhoto } from "./primitives"
 
 const BEIGE = "#b6b09f"
 
@@ -370,60 +370,19 @@ function ArtDeVivre() {
 /* ============================ 04 · LES RÉSIDENCES ============================ */
 function ResidenceRow({ t, i }: { t: Typology; i: number }) {
   const flip = i % 2 === 1
-  const [mode, setMode] = useState<"photo" | "3d">("photo")
-  const has3d = !!t.view3d
-  const src = mode === "3d" && t.view3d ? t.view3d : t.image
   return (
     <div className="mx-auto max-w-7xl px-6">
       <div className={`grid grid-cols-1 items-center gap-10 py-16 lg:grid-cols-12 lg:gap-16 ${flip ? "" : ""}`}>
-        {/* Visuel */}
+        {/* Visuel — photo immersive à profondeur */}
         <div className={`lg:col-span-7 ${flip ? "lg:order-2" : ""}`}>
           <Parallax distance={50}>
-            <TiltCard intensity={6}>
-              <div className="relative aspect-[16/10] w-full overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={mode}
-                    initial={{ opacity: 0, scale: 1.05 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute inset-0"
-                  >
-                    <Image
-                      src={src}
-                      alt={mode === "3d" ? `Vue 3D ${t.name}` : t.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
-
-                {/* Bascule Photo / Vue 3D */}
-                {has3d && (
-                  <div
-                    className="absolute left-4 top-4 z-20 flex gap-1 border border-white/15 bg-black/50 p-1 backdrop-blur-sm"
-                    style={{ transform: "translateZ(60px)" }}
-                  >
-                    {(["photo", "3d"] as const).map((m) => (
-                      <button
-                        key={m}
-                        onClick={() => setMode(m)}
-                        className="px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] transition-colors duration-300"
-                        style={{
-                          backgroundColor: mode === m ? BEIGE : "transparent",
-                          color: mode === m ? "#000" : "rgba(255,255,255,0.75)",
-                        }}
-                        data-cursor
-                      >
-                        {m === "photo" ? "Photo" : "Vue 3D"}
-                      </button>
-                    ))}
-                  </div>
-                )}
+            <div className="relative">
+              <DepthPhoto src={t.image} alt={t.name} className="aspect-[16/10] w-full" />
+              <div className="pointer-events-none absolute bottom-4 left-4 z-20 flex items-center gap-2 bg-black/45 px-3 py-1.5 backdrop-blur-sm">
+                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: BEIGE }} />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-white/80">Vue immersive</span>
               </div>
-            </TiltCard>
+            </div>
           </Parallax>
         </div>
 

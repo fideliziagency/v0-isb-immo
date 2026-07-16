@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useRef, useEffect, useState } from "react"
+import Image from "next/image"
 import {
   motion,
   useScroll,
@@ -9,6 +10,7 @@ import {
   useInView,
   useSpring,
   useMotionValue,
+  useMotionTemplate,
   animate,
   type MotionValue,
 } from "framer-motion"
@@ -214,6 +216,75 @@ export function DrawLine({ className }: { className?: string }) {
       viewport={{ once: true }}
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
     />
+  )
+}
+
+/* ---------- Photo à profondeur (effet 3D parallax depuis une image plate) ---------- */
+export function DepthPhoto({
+  src,
+  alt,
+  className,
+  priority = false,
+}: {
+  src: string
+  alt: string
+  className?: string
+  priority?: boolean
+}) {
+  const mx = useMotionValue(0) // -0.5 .. 0.5
+  const my = useMotionValue(0)
+
+  // Inclinaison 3D du cadre
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [7, -7]), { stiffness: 150, damping: 18 })
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-9, 9]), { stiffness: 150, damping: 18 })
+  // Parallax de l'image à l'intérieur du cadre
+  const ix = useSpring(useTransform(mx, [-0.5, 0.5], ["5%", "-5%"]), { stiffness: 150, damping: 20 })
+  const iy = useSpring(useTransform(my, [-0.5, 0.5], ["5%", "-5%"]), { stiffness: 150, damping: 20 })
+  // Reflet lumineux qui suit le curseur
+  const gpx = useTransform(mx, [-0.5, 0.5], [12, 88])
+  const gpy = useTransform(my, [-0.5, 0.5], [12, 88])
+  const glare = useMotionTemplate`radial-gradient(600px circle at ${gpx}% ${gpy}%, rgba(255,255,255,0.16), transparent 55%)`
+
+  // Respiration continue (vie même sans souris / sur mobile)
+  const scale = useMotionValue(1.16)
+  useEffect(() => {
+    const c = animate(scale, [1.16, 1.22], {
+      duration: 9,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut",
+    })
+    return () => c.stop()
+  }, [scale])
+
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect()
+    mx.set((e.clientX - r.left) / r.width - 0.5)
+    my.set((e.clientY - r.top) / r.height - 0.5)
+  }
+  function onLeave() {
+    mx.set(0)
+    my.set(0)
+  }
+
+  return (
+    <div
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={"relative overflow-hidden " + (className ?? "")}
+      style={{ perspective: 1200 }}
+    >
+      <motion.div
+        style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+        className="absolute inset-0"
+      >
+        <motion.div style={{ x: ix, y: iy, scale }} className="absolute inset-0">
+          <Image src={src} alt={alt} fill className="object-cover" priority={priority} />
+        </motion.div>
+        <motion.div style={{ background: glare }} className="pointer-events-none absolute inset-0 mix-blend-soft-light" />
+        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+      </motion.div>
+    </div>
   )
 }
 
