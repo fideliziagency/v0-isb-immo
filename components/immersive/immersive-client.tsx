@@ -9,6 +9,7 @@ import {
   useTransform,
   useSpring,
   useMotionValue,
+  useMotionTemplate,
   AnimatePresence,
 } from "framer-motion"
 import {
@@ -33,7 +34,7 @@ import {
   SCENES,
   type Typology,
 } from "./data"
-import { Reveal, RiseWords, Parallax, Counter, TiltCard, Magnetic, ScrollProgress, DrawLine, DepthPhoto } from "./primitives"
+import { Reveal, RiseWords, Parallax, Counter, Magnetic, ScrollProgress, DrawLine, DepthPhoto } from "./primitives"
 
 const BEIGE = "#b6b09f"
 
@@ -324,6 +325,62 @@ function Vision() {
 }
 
 /* ============================ 03 · L'ART DE VIVRE ============================ */
+function AmenityCard({ a, index }: { a: (typeof AMENITIES)[number]; index: number }) {
+  const [hover, setHover] = useState(false)
+  const mx = useMotionValue(0.5)
+  const my = useMotionValue(0.5)
+  const rx = useSpring(useTransform(my, [0, 1], [6, -6]), { stiffness: 200, damping: 18 })
+  const ry = useSpring(useTransform(mx, [0, 1], [-6, 6]), { stiffness: 200, damping: 18 })
+  const gx = useTransform(mx, (v) => `${v * 100}%`)
+  const gy = useTransform(my, (v) => `${v * 100}%`)
+  const glow = useMotionTemplate`radial-gradient(240px circle at ${gx} ${gy}, rgba(182,176,159,0.20), transparent 60%)`
+
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect()
+    mx.set((e.clientX - r.left) / r.width)
+    my.set((e.clientY - r.top) / r.height)
+  }
+
+  return (
+    <Reveal delay={(index % 4) * 0.08}>
+      <motion.div
+        onMouseMove={onMove}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => {
+          setHover(false)
+          mx.set(0.5)
+          my.set(0.5)
+        }}
+        style={{ rotateX: rx, rotateY: ry, transformPerspective: 1000, transformStyle: "preserve-3d" }}
+        className="group relative h-full overflow-hidden border border-white/10 bg-white/[0.02] p-7 transition-colors duration-500 hover:border-[#b6b09f]/40"
+        data-cursor
+      >
+        {/* Lueur qui suit le curseur */}
+        <motion.div
+          style={{ background: glow, opacity: hover ? 1 : 0 }}
+          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        />
+        {/* Numéro fantôme */}
+        <span className="disp pointer-events-none absolute -bottom-6 -right-1 select-none text-[7rem] font-light leading-none text-white/[0.045]">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <div className="relative mb-12 flex items-center justify-between" style={{ transform: "translateZ(30px)" }}>
+          <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: BEIGE }}>
+            {a.tag}
+          </span>
+          <Plus className="h-4 w-4 text-white/30 transition-all duration-500 group-hover:rotate-90 group-hover:text-[#b6b09f]" />
+        </div>
+        <div className="relative" style={{ transform: "translateZ(45px)" }}>
+          <h3 className="disp text-2xl font-light text-white">{a.title}</h3>
+          <span className="mt-3 block h-px w-8 origin-left bg-[#b6b09f] transition-transform duration-500 ease-out group-hover:scale-x-[4]" />
+          <p className="mt-4 text-sm font-light leading-relaxed text-white/55">{a.desc}</p>
+        </div>
+      </motion.div>
+    </Reveal>
+  )
+}
+
 function ArtDeVivre() {
   return (
     <section id="art-de-vivre" className="relative bg-[#0c0c0c] py-28 md:py-40">
@@ -344,22 +401,7 @@ function ArtDeVivre() {
 
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {AMENITIES.map((a, i) => (
-            <Reveal key={a.title} delay={(i % 4) * 0.08}>
-              <TiltCard className="group h-full">
-                <div className="flex h-full flex-col justify-between border border-white/10 bg-white/[0.02] p-7 transition-colors duration-500 hover:border-[#b6b09f]/40 hover:bg-white/[0.04]">
-                  <div className="mb-10 flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: BEIGE }}>
-                      {a.tag}
-                    </span>
-                    <Plus className="h-4 w-4 text-white/30 transition-transform duration-500 group-hover:rotate-90" />
-                  </div>
-                  <div style={{ transform: "translateZ(30px)" }}>
-                    <h3 className="disp text-2xl font-light text-white">{a.title}</h3>
-                    <p className="mt-3 text-sm font-light leading-relaxed text-white/55">{a.desc}</p>
-                  </div>
-                </div>
-              </TiltCard>
-            </Reveal>
+            <AmenityCard key={a.title} a={a} index={i} />
           ))}
         </div>
       </div>
