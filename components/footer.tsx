@@ -59,7 +59,7 @@ export default function Footer() {
                 <Mail className="h-5 w-5 text-custom-beige mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-gray-400 text-sm">Email</p>
-                  <p className="text-white">isbimmobiliere@gmail.com</p>
+                  <p className="text-white">contact@isbimmobiliere.com</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -126,7 +126,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
-              © 2024 The Life Residence - ISB Immobilière Sodaprim Bouaziz. Tous droits réservés.
+              © {new Date().getFullYear()} The Life Residence - ISB Immobilière Sodaprim Bouaziz. Tous droits réservés.
             </p>
             <p className="text-gray-400 text-sm">Livraison prévue : Fin 2027</p>
           </div>

@@ -123,8 +123,8 @@ export default function FacilitiesSection() {
                 <div className="text-sm text-gray-600">Sécurité & Surveillance</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-custom-beige-800 mb-2">100%</div>
-                <div className="text-sm text-gray-600">Satisfaction Résidents</div>
+                <div className="text-3xl font-bold text-custom-beige-800 mb-2">6</div>
+                <div className="text-sm text-gray-600">Typologies de logements</div>
               </div>
             </div>
           </div>

@@ -130,7 +130,7 @@ export default function DuplexPage() {
   const specifications = [
     { icon: Ruler, label: "Surface", value: "221-254 m²" },
     { icon: Bed, label: "RDC", value: "Salon, salle à manger, cuisine" },
-    { icon: Home, label: "Étage", value: "3 suites" },
+    { icon: Home, label: "Chambres", value: "3 suites" },
     { icon: Droplets, label: "Salle d'eau", value: "1 salle d'eau" },
     { icon: Home, label: "Niveaux", value: "2 niveaux" },
     { icon: Droplets, label: "Piscine privée", value: "Incluse" },

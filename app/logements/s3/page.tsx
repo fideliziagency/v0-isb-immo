@@ -134,7 +134,7 @@ export default function AppartementS3Page() {
     { icon: Ruler, label: "Surface", value: "139-208 m²" },
     { icon: Bed, label: "Chambres", value: "Une suite parentale, 2 chambres" },
     { icon: Bath, label: "Salles de bain", value: "2 salles de bain" },
-    { icon: Droplets, label: "Salle d'eau", value: "S.D invités" },
+    { icon: Droplets, label: "Salle d'eau invités", value: "Incluse" },
     { icon: Home, label: "Salon", value: "Grand salon + cuisine" },
   ]
 

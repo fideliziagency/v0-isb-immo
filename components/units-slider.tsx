@@ -130,7 +130,7 @@ export default function UnitsSlider() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Votre futur chez-vous</h2>
           <p className="text-lg text-gray-600">
-            Découvrez nos différents types de logements, du studio familial au duplex de prestige
+            Découvrez nos différents types de logements, du S+1 à la villa individuelle
           </p>
         </div>
 
@@ -245,7 +245,7 @@ export default function UnitsSlider() {
                         {/* CTA Button */}
                         <Link href={`/logements/${category.code}`}>
                           <Button className="w-full rounded-none bg-custom-beige hover:bg-custom-beige text-white">
-                            Découvrir les maisons
+                            Découvrir ce logement
                           </Button>
                         </Link>
                       </CardContent>

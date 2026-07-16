@@ -168,7 +168,7 @@ export default function VillaPage() {
   const specifications = [
     { icon: Ruler, label: "Surface", value: "353-357 m²" },
     { icon: Bed, label: "RDC", value: "Salon, salle à manger, cuisine" },
-    { icon: Bath, label: "Étage", value: "3 suites" },
+    { icon: Bath, label: "Chambres", value: "3 suites" },
     { icon: Trees, label: "Jardin", value: "60-219 m²" },
     { icon: Home, label: "Niveaux", value: "2 niveaux + sous-sol" },
     { icon: Droplets, label: "Piscine privée", value: "Incluse" },
