@@ -370,6 +370,9 @@ function ArtDeVivre() {
 /* ============================ 04 · LES RÉSIDENCES ============================ */
 function ResidenceRow({ t, i }: { t: Typology; i: number }) {
   const flip = i % 2 === 1
+  const [mode, setMode] = useState<"photo" | "3d">("photo")
+  const has3d = !!t.view3d
+  const src = mode === "3d" && t.view3d ? t.view3d : t.image
   return (
     <div className="mx-auto max-w-7xl px-6">
       <div className={`grid grid-cols-1 items-center gap-10 py-16 lg:grid-cols-12 lg:gap-16 ${flip ? "" : ""}`}>
@@ -378,17 +381,45 @@ function ResidenceRow({ t, i }: { t: Typology; i: number }) {
           <Parallax distance={50}>
             <TiltCard intensity={6}>
               <div className="relative aspect-[16/10] w-full overflow-hidden">
-                <Image src={t.image} alt={t.name} fill className="object-cover" />
-                <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
-                {t.view3d && (
-                  <div
-                    className="absolute bottom-4 right-4 h-24 w-36 overflow-hidden border border-white/20 shadow-2xl md:h-32 md:w-48"
-                    style={{ transform: "translateZ(50px)" }}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={mode}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute inset-0"
                   >
-                    <Image src={t.view3d} alt={`Vue 3D ${t.name}`} fill className="object-cover" />
-                    <span className="absolute left-2 top-2 bg-black/60 px-2 py-0.5 text-[9px] uppercase tracking-widest text-white/80">
-                      Vue 3D
-                    </span>
+                    <Image
+                      src={src}
+                      alt={mode === "3d" ? `Vue 3D ${t.name}` : t.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
+
+                {/* Bascule Photo / Vue 3D */}
+                {has3d && (
+                  <div
+                    className="absolute left-4 top-4 z-20 flex gap-1 border border-white/15 bg-black/50 p-1 backdrop-blur-sm"
+                    style={{ transform: "translateZ(60px)" }}
+                  >
+                    {(["photo", "3d"] as const).map((m) => (
+                      <button
+                        key={m}
+                        onClick={() => setMode(m)}
+                        className="px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] transition-colors duration-300"
+                        style={{
+                          backgroundColor: mode === m ? BEIGE : "transparent",
+                          color: mode === m ? "#000" : "rgba(255,255,255,0.75)",
+                        }}
+                        data-cursor
+                      >
+                        {m === "photo" ? "Photo" : "Vue 3D"}
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>

@@ -133,7 +133,6 @@ export const TYPOLOGIES: Typology[] = [
     surface: "353 – 357 m²",
     desc: "Une villa avec piscine et jardin privatifs, la pièce maîtresse de la résidence.",
     image: "/villa-new-exterior-view.png",
-    view3d: "/villa-modern-pool-exterior.jpeg",
     href: "/logements/villa",
     plans: [],
   },
