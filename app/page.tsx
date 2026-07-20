@@ -216,13 +216,17 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
-        <Image
-          src="/nouvelle-facade-residence.png"
-          alt="The Life Residence - Vue frontale"
-          fill
-          className="object-cover"
-          priority
-        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/nouvelle-facade-residence.png"
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-label="The Life Residence - Vidéo de présentation"
+        >
+          <source src="/header-isb.mp4" type="video/mp4" />
+        </video>
         <div className="relative z-10 container mx-auto px-4 pt-8 text-center">
           <div className="backdrop-blur-md bg-black/40 border border-white/20 px-8 py-6 max-w-4xl mx-auto shadow-xl">
             <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-2">The Life Residence</h1>
