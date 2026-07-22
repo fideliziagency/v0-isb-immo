@@ -215,22 +215,25 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative overflow-hidden bg-black md:h-screen">
+        {/* Vidéo : bandeau 16:9 entier sur mobile (aucun crop), plein écran cover sur desktop */}
         <video
           autoPlay
           muted
           loop
           playsInline
           poster="/nouvelle-facade-residence.png"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="aspect-video w-full object-cover md:absolute md:inset-0 md:aspect-auto md:h-full"
           aria-label="The Life Residence - Vidéo de présentation"
         >
           <source src="/header-isb.mp4" type="video/mp4" />
         </video>
-        <div className="relative z-10 container mx-auto px-4 pt-8 text-center">
-          <div className="backdrop-blur-md bg-black/40 border border-white/20 px-8 py-6 max-w-4xl mx-auto shadow-xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-2">The Life Residence</h1>
-            <p className="text-lg md:text-xl text-white drop-shadow-lg font-light">
+        <div className="relative z-10 container mx-auto px-4 py-10 text-center md:py-0 md:pt-8">
+          <div className="backdrop-blur-md bg-black/40 border border-white/20 px-6 py-6 md:px-8 max-w-4xl mx-auto shadow-xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-2">
+              The Life Residence
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-white drop-shadow-lg font-light">
               L'art de vivre au cœur de la modernité
             </p>
           </div>
